@@ -5,6 +5,7 @@ import 'package:appnutritional/ui/history_page.dart';
 import 'package:appnutritional/ui/home_page.dart';
 import 'package:appnutritional/ui/search_nutrients_food.dart';
 import 'package:appnutritional/ui/search_recipes.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
       ),
       home: SafeArea(
         child: Scaffold(
+          extendBody: true,
+          backgroundColor: Colors.green[100],
           body: BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
             if (state.indexValue == 0) {
               curentIndex = state.indexValue;
@@ -60,30 +63,24 @@ class MyApp extends StatelessWidget {
           }),
           bottomNavigationBar:
               BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
-            return BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: curentIndex,
+            return CurvedNavigationBar(
+              color: Colors.greenAccent,
+              //buttonBackgroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
+              height: 60,
+              animationCurve: Curves.easeInOut,
+              animationDuration: const Duration(milliseconds: 300),
               onTap: (index) {
                 curentIndex =
                     BlocProvider.of<IndexCubit>(context).changePage(index);
               },
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+              items: const [
+                Icon(
+                  Icons.home,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.flatware),
-                  label: 'Food',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.receipt_rounded),
-                  label: 'Recipes',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.history_edu_sharp),
-                  label: 'History',
-                ),
+                Icon(Icons.flatware),
+                Icon(Icons.receipt_rounded),
+                Icon(Icons.history_edu_sharp),
               ],
             );
           }),
