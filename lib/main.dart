@@ -31,61 +31,63 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: Scaffold(
-        body: BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
-          if (state.indexValue == 0) {
-            curentIndex = state.indexValue;
-            return const HomePage();
-          } else if (state.indexValue == 1) {
-            curentIndex = state.indexValue;
-            return SingleChildScrollView(
-              child: BlocProvider.value(
-                  value: foodcubit, child: const SearchPage()),
+      home: SafeArea(
+        child: Scaffold(
+          body: BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
+            if (state.indexValue == 0) {
+              curentIndex = state.indexValue;
+              return const HomePage();
+            } else if (state.indexValue == 1) {
+              curentIndex = state.indexValue;
+              return SingleChildScrollView(
+                child: BlocProvider.value(
+                    value: foodcubit, child: const SearchPage()),
+              );
+            } else if (state.indexValue == 2) {
+              curentIndex = state.indexValue;
+              return SingleChildScrollView(
+                child: BlocProvider.value(
+                    value: recipeCubit, child: const RecipePage()),
+              );
+            } else if (state.indexValue == 3) {
+              curentIndex = state.indexValue;
+              return BlocProvider.value(
+                  value: recipeCubit, child: const HistoryPage());
+            } else {
+              curentIndex = state.indexValue;
+              return const HomePage();
+            }
+          }),
+          bottomNavigationBar:
+              BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
+            return BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: curentIndex,
+              onTap: (index) {
+                curentIndex =
+                    BlocProvider.of<IndexCubit>(context).changePage(index);
+              },
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.flatware),
+                  label: 'Food',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.receipt_rounded),
+                  label: 'Recipes',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.history_edu_sharp),
+                  label: 'History',
+                ),
+              ],
             );
-          } else if (state.indexValue == 2) {
-            curentIndex = state.indexValue;
-            return SingleChildScrollView(
-              child: BlocProvider.value(
-                  value: recipeCubit, child: const RecipePage()),
-            );
-          } else if (state.indexValue == 3) {
-            curentIndex = state.indexValue;
-            return BlocProvider.value(
-                value: recipeCubit, child: const HistoryPage());
-          } else {
-            curentIndex = state.indexValue;
-            return const HomePage();
-          }
-        }),
-        bottomNavigationBar:
-            BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
-          return BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: curentIndex,
-            onTap: (index) {
-              curentIndex =
-                  BlocProvider.of<IndexCubit>(context).changePage(index);
-            },
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.flatware),
-                label: 'Food',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.receipt_rounded),
-                label: 'Recipes',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.history_edu_sharp),
-                label: 'History',
-              ),
-            ],
-          );
-        }),
+          }),
+        ),
       ),
     );
   }
