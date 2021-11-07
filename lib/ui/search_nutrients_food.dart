@@ -148,6 +148,7 @@ class ShowListFood extends StatelessWidget {
               BlocProvider.of<FoodCubit>(context)
                   .getutrientsFood(foods[index].id, foods[index].image);
             },
+            trailing: const Icon(Icons.arrow_forward),
           ),
           separatorBuilder: (context, index) => const Divider(
             color: Colors.white,
