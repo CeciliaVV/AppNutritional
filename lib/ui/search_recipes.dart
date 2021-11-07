@@ -161,8 +161,8 @@ class DetailRecipePage extends StatelessWidget {
     double ancho = tam.width;
     double alto = tam.height;
     return SizedBox(
+      height: alto * 5,
       width: ancho,
-      height: alto,
       child: WebView(
         initialUrl: detail.link,
         //JS unrestricted, so that JS can execute in the webview

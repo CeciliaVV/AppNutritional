@@ -14,7 +14,7 @@ class Api {
 
   Future<List<Food>> getFood(String aliment) async {
     final response = await http.Client().get(Uri.parse(
-        "https://api.spoonacular.com/food/ingredients/search?query=$aliment&number=15&apiKey=77da9e1c9fa44336bd5dfeaf2dec531b"));
+        "https://api.spoonacular.com/food/ingredients/search?query=$aliment&number=15&apiKey=dc37663c66eb4f83a06b350a8a3363d2"));
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -31,7 +31,7 @@ class Api {
 
   Future<Macronutrients> getMacroNutrients(int id) async {
     final response = await http.Client().get(Uri.parse(
-        "https://api.spoonacular.com/food/ingredients/$id/information?amount=150&unit=grams&apiKey=77da9e1c9fa44336bd5dfeaf2dec531b"));
+        "https://api.spoonacular.com/food/ingredients/$id/information?amount=150&unit=grams&apiKey=dc37663c66eb4f83a06b350a8a3363d2"));
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -50,7 +50,7 @@ class Api {
 
   Future<List<Recipe>> getRecipes(String word) async {
     final response = await http.Client().get(Uri.parse(
-        "https://api.spoonacular.com/recipes/complexSearch?query=$word&number=15&apiKey=77da9e1c9fa44336bd5dfeaf2dec531b"));
+        "https://api.spoonacular.com/recipes/complexSearch?query=$word&number=15&apiKey=dc37663c66eb4f83a06b350a8a3363d2"));
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -67,7 +67,7 @@ class Api {
 
   Future<DetailRecipe> getDetailRecipe(int id) async {
     final response = await http.Client().get(Uri.parse(
-        "https://api.spoonacular.com/recipes/$id/information?includeNutrition=false&apiKey=77da9e1c9fa44336bd5dfeaf2dec531b"));
+        "https://api.spoonacular.com/recipes/$id/information?includeNutrition=false&apiKey=dc37663c66eb4f83a06b350a8a3363d2"));
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

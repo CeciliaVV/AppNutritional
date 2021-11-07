@@ -129,8 +129,8 @@ class ShowListFood extends StatelessWidget {
         child: ListView.separated(
           itemBuilder: (context, index) => ListTile(
             leading: Container(
-              height: ancho * 0.15,
-              width: alto * 0.15,
+              height: alto * 0.15,
+              width: ancho * 0.15,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
@@ -177,22 +177,80 @@ class DetailFood extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
+            height: alto * 0.1,
+            width: ancho * 0.1,
+          ),
+          SizedBox(
             height: ancho * 0.25,
             width: alto * 0.25,
             child: Image.network(
                 "https://spoonacular.com/cdn/ingredients_250x250/$image"),
           ),
-          Text(
-            "Percent carbohydrates: ${nutrients.percentCarbs}",
-            style: const TextStyle(color: Colors.black, fontSize: 20),
+          SizedBox(
+            height: alto * 0.075,
+            width: ancho * 0.1,
           ),
-          Text(
-            "Percent proteins: ${nutrients.percentProtein}",
-            style: const TextStyle(color: Colors.black, fontSize: 20),
-          ),
+          /*
+          Text("Percent carbohydrates: ${nutrients.percentCarbs}",
+              style: const TextStyle(color: Colors.black, fontSize: 20)),
+          Text("Percent proteins: ${nutrients.percentProtein}",
+              style: const TextStyle(color: Colors.black, fontSize: 20)),
           Text(
             "Percent  Fat: ${nutrients.percentFat}",
             style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),*/
+          Row(
+            children: [
+              SizedBox(
+                height: alto * 0.2,
+                width: ancho * 0.05,
+              ),
+              Container(
+                color: Colors.green[50],
+                child: SizedBox(
+                  height: alto * 0.125,
+                  width: ancho * 0.25,
+                  child: Text(
+                    "Percent carbohydrates: ${nutrients.percentCarbs}",
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: alto * 0.2,
+                width: ancho * 0.1,
+              ),
+              Container(
+                color: Colors.green[50],
+                child: SizedBox(
+                  height: alto * 0.125,
+                  width: ancho * 0.2,
+                  child: Text(
+                    "Percent proteins: ${nutrients.percentProtein}",
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: alto * 0.2,
+                width: ancho * 0.1,
+              ),
+              Container(
+                color: Colors.green[50],
+                child: SizedBox(
+                  height: alto * 0.125,
+                  width: ancho * 0.2,
+                  child: Text(
+                    "Percent  Fat: ${nutrients.percentFat}",
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: alto * 0.1,
+                width: ancho * 0.05,
+              ),
+            ],
           ),
         ],
       ),
