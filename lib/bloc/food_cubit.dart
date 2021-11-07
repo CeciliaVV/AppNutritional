@@ -3,6 +3,7 @@ import 'package:appnutritional/models/nutrients_food.dart';
 import 'package:appnutritional/repository/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodCubit extends Cubit<FoodState> {
   final Api api;
@@ -16,6 +17,10 @@ class FoodCubit extends Cubit<FoodState> {
 
     try {
       final foods = await api.getFood(queryController.text);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> miHistorial = (prefs.getStringList('_keyHistorial') ?? []);
+      miHistorial.add(queryController.text);
+      await prefs.setStringList('_keyHistorial', miHistorial);
       print(foods.toString());
       if (foods.isEmpty) {
         emit(ErrorState("No results found. Try agin."));

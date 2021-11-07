@@ -1,4 +1,5 @@
 import 'package:appnutritional/bloc/food_cubit.dart';
+import 'package:appnutritional/bloc/history_cubit.dart';
 import 'package:appnutritional/bloc/recipe_food.dart';
 import 'package:appnutritional/repository/api.dart';
 import 'package:appnutritional/ui/history_page.dart';
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
 
   final foodcubit = FoodCubit(Api());
   final recipeCubit = RecipeCubit(Api());
-  int curentIndex = 0;
+  int currentIndex = 0;
+  final navigationKey = GlobalKey<CurvedNavigationBarState>();
+  final historyCubit = HistoryCubit();
   // This widget is the root of your application.
 
   @override
@@ -38,32 +41,44 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.green[100],
           body: BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
             if (state.indexValue == 0) {
-              curentIndex = state.indexValue;
-              return const HomePage();
+              currentIndex = 0;
+              return BlocProvider.value(
+                  value: BlocProvider.of<IndexCubit>(context),
+                  child: const HomePage());
             } else if (state.indexValue == 1) {
-              curentIndex = state.indexValue;
+              currentIndex = 1;
+              //BlocProvider.of<IndexCubit>(context).changePage(1);
               return SingleChildScrollView(
                 child: BlocProvider.value(
                     value: foodcubit, child: const SearchPage()),
               );
             } else if (state.indexValue == 2) {
-              curentIndex = state.indexValue;
+              currentIndex = 2;
+              //BlocProvider.of<IndexCubit>(context).changePage(2);
               return SingleChildScrollView(
                 child: BlocProvider.value(
                     value: recipeCubit, child: const RecipePage()),
               );
             } else if (state.indexValue == 3) {
-              curentIndex = state.indexValue;
+              currentIndex = 3;
+              //BlocProvider.of<IndexCubit>(context).changePage(3);
               return BlocProvider.value(
-                  value: recipeCubit, child: const HistoryPage());
+                  value: historyCubit, child: HistoryPage());
             } else {
-              curentIndex = state.indexValue;
+              currentIndex = 0;
               return const HomePage();
             }
           }),
           bottomNavigationBar:
               BlocBuilder<IndexCubit, IndexState>(builder: (_, state) {
             return CurvedNavigationBar(
+              index: state.indexValue == 1
+                  ? 1
+                  : (state.indexValue == 2
+                      ? 2
+                      : state.indexValue == 3
+                          ? 3
+                          : 0),
               color: Colors.greenAccent,
               //buttonBackgroundColor: Colors.white,
               backgroundColor: Colors.transparent,
@@ -71,7 +86,7 @@ class MyApp extends StatelessWidget {
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 300),
               onTap: (index) {
-                curentIndex =
+                currentIndex =
                     BlocProvider.of<IndexCubit>(context).changePage(index);
               },
               items: const [
