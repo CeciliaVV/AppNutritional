@@ -19,11 +19,19 @@ class RecipePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          width: ancho * 0.1,
+          height: alto * 0.05,
+        ),
         Row(
           children: [
             SizedBox(
-              width: ancho * 0.6,
+              width: ancho * 0.1,
               height: alto * 0.1,
+            ),
+            SizedBox(
+              width: ancho * 0.55,
+              height: alto * 0.075,
               child: TextFormField(
                 controller:
                     BlocProvider.of<RecipeCubit>(context).queryController,
@@ -47,10 +55,15 @@ class RecipePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: ancho * 0.3,
+              width: ancho * 0.05,
               height: alto * 0.1,
+            ),
+            SizedBox(
+              width: ancho * 0.2,
+              height: alto * 0.065,
               //shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: TextButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
                 onPressed: () {
                   BlocProvider.of<RecipeCubit>(context).getRecipeSearched();
                 },
@@ -60,8 +73,12 @@ class RecipePage extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
               ),
-            )
+            ),
           ],
+        ),
+        SizedBox(
+          width: ancho * 0.1,
+          height: alto * 0.05,
         ),
         BlocBuilder<RecipeCubit, RecipeState>(builder: (context, state) {
           if (state is InitialStateRecipe) {

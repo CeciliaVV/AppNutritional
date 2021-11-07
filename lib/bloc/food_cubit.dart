@@ -21,10 +21,12 @@ class FoodCubit extends Cubit<FoodState> {
       List<String> miHistorial = (prefs.getStringList('_keyHistorial') ?? []);
       miHistorial.add(queryController.text);
       await prefs.setStringList('_keyHistorial', miHistorial);
+      List<String> typeSearch = (prefs.getStringList('_keyTipo') ?? []);
+      typeSearch.add('FOOD');
+      await prefs.setStringList('_keyTipo', typeSearch);
       print(foods.toString());
       if (foods.isEmpty) {
         emit(ErrorState("No results found. Try agin."));
-        //emit(NoFoodSearchedState());
       } else {
         emit(FoodSearchedState(foods));
       }

@@ -18,11 +18,19 @@ class SearchPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          width: ancho * 0.1,
+          height: alto * 0.05,
+        ),
         Row(
           children: [
             SizedBox(
-              width: ancho * 0.6,
+              width: ancho * 0.1,
               height: alto * 0.1,
+            ),
+            SizedBox(
+              width: ancho * 0.55,
+              height: alto * 0.075,
               child: TextFormField(
                 controller: BlocProvider.of<FoodCubit>(context).queryController,
                 decoration: const InputDecoration(
@@ -45,10 +53,15 @@ class SearchPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: ancho * 0.3,
+              width: ancho * 0.05,
               height: alto * 0.1,
+            ),
+            SizedBox(
+              width: ancho * 0.2,
+              height: alto * 0.065,
               //shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: TextButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.greenAccent),
                 onPressed: () {
                   BlocProvider.of<FoodCubit>(context).getFoodSearched();
                 },
@@ -58,8 +71,16 @@ class SearchPage extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              width: ancho * 0.1,
+              height: alto * 0.1,
+            ),
           ],
+        ),
+        SizedBox(
+          width: ancho * 0.1,
+          height: alto * 0.05,
         ),
         BlocBuilder<FoodCubit, FoodState>(builder: (context, state) {
           if (state is InitialState) {
@@ -73,65 +94,12 @@ class SearchPage extends StatelessWidget {
           } else if (state is FoodSearchedState) {
             return BlocProvider.value(
                 value: BlocProvider.of<FoodCubit>(context),
-                child: ShowListFood(
-                    foods: state
-                        .foods)); /*Center(
-                child: SizedBox(
-              width: ancho,
-              height: alto * 0.8,
-              child: ListView.separated(
-                itemBuilder: (context, index) => ListTile(
-                  leading: SizedBox(
-                    height: 120,
-                    width: 120,
-                    child: Image.network(
-                        "https://spoonacular.com/cdn/ingredients_250x250/${state.foods[index].image}"),
-                  ),
-                  title: Text(
-                    "${index + 1}. ${state.foods[index].name}",
-                    style: const TextStyle(color: Colors.green),
-                  ),
-                  onTap: () {
-                    foodCubit.getutrientsFood(
-                        state.foods[index].id, state.foods[index].image);
-                  },
-                ),
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.green[900],
-                ),
-                itemCount: state.foods.length,
-              ),
-            ));*/
+                child: ShowListFood(foods: state.foods));
           } else if (state is DetailFoodChargedState) {
             return BlocProvider.value(
                 value: BlocProvider.of<FoodCubit>(context),
-                child: DetailFood(
-                    nutrients: state.nutrients,
-                    image: state
-                        .image)); /*Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: alto * 0.25,
-                    width: ancho * 0.25,
-                    child: Image.network(
-                        "https://spoonacular.com/cdn/ingredients_250x250/${state.image}"),
-                  ),
-                  Text(
-                    "Percent carbohydrates: ${state.nutrients.percentCarbs}",
-                    style: const TextStyle(color: Colors.black, fontSize: 24),
-                  ),
-                  Text(
-                    "Percent proteins: ${state.nutrients.percentProtein}",
-                    style: const TextStyle(color: Colors.black, fontSize: 24),
-                  ),
-                  Text(
-                    "Percent  Fat: ${state.nutrients.percentFat}",
-                    style: const TextStyle(color: Colors.black, fontSize: 24),
-                  ),
-                ],
-              ),
-            );*/
+                child:
+                    DetailFood(nutrients: state.nutrients, image: state.image));
           } else {
             return const Center(
               child: Text("Error"),
@@ -154,30 +122,39 @@ class ShowListFood extends StatelessWidget {
     double ancho = tam.width;
     double alto = tam.height;
 
-    return SizedBox(
-      width: ancho,
-      height: alto,
-      child: ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-          leading: SizedBox(
-            height: ancho * 0.1,
-            width: alto * 0.1,
-            child: Image.network(
-                "https://spoonacular.com/cdn/ingredients_250x250/${foods[index].image}"),
+    return Center(
+      child: SizedBox(
+        width: ancho * 0.8,
+        height: alto,
+        child: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+            leading: Container(
+              height: ancho * 0.15,
+              width: alto * 0.15,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://spoonacular.com/cdn/ingredients_100x100/${foods[index].image}"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            title: Text(
+              " ${foods[index].name}",
+              style: const TextStyle(color: Colors.green),
+            ),
+            onTap: () {
+              BlocProvider.of<FoodCubit>(context)
+                  .getutrientsFood(foods[index].id, foods[index].image);
+            },
           ),
-          title: Text(
-            "${index + 1}. ${foods[index].name}",
-            style: const TextStyle(color: Colors.green),
+          separatorBuilder: (context, index) => const Divider(
+            color: Colors.white,
+            //color: Colors.green[900],
           ),
-          onTap: () {
-            BlocProvider.of<FoodCubit>(context)
-                .getutrientsFood(foods[index].id, foods[index].image);
-          },
+          itemCount: foods.length,
         ),
-        separatorBuilder: (context, index) => Divider(
-          color: Colors.green[900],
-        ),
-        itemCount: foods.length,
       ),
     );
   }
@@ -195,27 +172,29 @@ class DetailFood extends StatelessWidget {
     double ancho = tam.width;
     double alto = tam.height;
 
-    return Column(
-      children: [
-        SizedBox(
-          height: ancho * 0.25,
-          width: alto * 0.25,
-          child: Image.network(
-              "https://spoonacular.com/cdn/ingredients_250x250/$image"),
-        ),
-        Text(
-          "Percent carbohydrates: ${nutrients.percentCarbs}",
-          style: const TextStyle(color: Colors.black, fontSize: 24),
-        ),
-        Text(
-          "Percent proteins: ${nutrients.percentProtein}",
-          style: const TextStyle(color: Colors.black, fontSize: 24),
-        ),
-        Text(
-          "Percent  Fat: ${nutrients.percentFat}",
-          style: const TextStyle(color: Colors.black, fontSize: 24),
-        ),
-      ],
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: ancho * 0.25,
+            width: alto * 0.25,
+            child: Image.network(
+                "https://spoonacular.com/cdn/ingredients_250x250/$image"),
+          ),
+          Text(
+            "Percent carbohydrates: ${nutrients.percentCarbs}",
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          Text(
+            "Percent proteins: ${nutrients.percentProtein}",
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          Text(
+            "Percent  Fat: ${nutrients.percentFat}",
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
+        ],
+      ),
     );
   }
 }

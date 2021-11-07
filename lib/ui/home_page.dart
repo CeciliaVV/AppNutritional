@@ -45,12 +45,9 @@ class HomePage extends StatelessWidget {
         mainAxisSpacing: alto * 0.03,
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         children: [
-          myItem('https://i.ibb.co/QjzwtVJ/bg-1.jpg', 1, context),
-          myItem(
-              'https://i.ibb.co/LzVd2VD/Rainbow-fruits-berries-background-on-white-Top-view-of-strawberries-blueberries-cherries-mango-apple.jpg',
-              2,
-              context),
-          myItem('https://i.ibb.co/MC8K8c4/bg-fruta-5-2.jpg', 3, context),
+          myItem('https://i.ibb.co/t8W6WLL/la-1.png', 1, context),
+          myItem('https://i.ibb.co/pPssM6M/LAAAAAAAAAA.png', 2, context),
+          myItem('https://i.ibb.co/GcRDHv8/IMG-3.png', 3, context),
         ],
         staggeredTiles: [
           StaggeredTile.extent(2, alto * 0.35),

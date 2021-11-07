@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/index_cubit.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(BlocProvider(create: (context) => IndexCubit(), child: MyApp()));
 }
 
@@ -29,6 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
               currentIndex = 3;
               //BlocProvider.of<IndexCubit>(context).changePage(3);
               return BlocProvider.value(
-                  value: historyCubit, child: HistoryPage());
+                  value: historyCubit, child: ListaHistorial());
             } else {
               currentIndex = 0;
               return const HomePage();

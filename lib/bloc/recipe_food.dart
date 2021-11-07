@@ -3,6 +3,7 @@ import 'package:appnutritional/models/recipes_list.dart';
 import 'package:appnutritional/repository/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecipeCubit extends Cubit<RecipeState> {
   final Api api;
@@ -13,7 +14,13 @@ class RecipeCubit extends Cubit<RecipeState> {
 
   Future getRecipeSearched() async {
     emit(RecipeSearchingState());
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> miHistorial = (prefs.getStringList('_keyHistorial') ?? []);
+    miHistorial.add(queryController.text);
+    await prefs.setStringList('_keyHistorial', miHistorial);
+    List<String> typeSearch = (prefs.getStringList('_keyTipo') ?? []);
+    typeSearch.add('RECIPE');
+    await prefs.setStringList('_keyTipo', typeSearch);
     try {
       final recipes = await api.getRecipes(queryController.text);
       print(recipes.toString());
