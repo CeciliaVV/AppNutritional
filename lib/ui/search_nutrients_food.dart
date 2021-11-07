@@ -150,9 +150,9 @@ class ShowListFood extends StatelessWidget {
             },
             trailing: const Icon(Icons.arrow_forward),
           ),
-          separatorBuilder: (context, index) => const Divider(
-            color: Colors.white,
-            //color: Colors.green[900],
+          separatorBuilder: (context, index) => Divider(
+            //color: Colors.white,
+            color: Colors.green[900],
           ),
           itemCount: foods.length,
         ),

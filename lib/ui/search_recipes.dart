@@ -119,29 +119,32 @@ class ShowListRecipe extends StatelessWidget {
     double ancho = tam.width;
     double alto = tam.height;
 
-    return SizedBox(
-      width: ancho,
-      height: alto,
-      child: ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-          leading: SizedBox(
-            height: ancho * 0.1,
-            width: alto * 0.1,
-            child: Image.network(recipes[index].image),
+    return Center(
+      child: SizedBox(
+        width: ancho * 0.8,
+        height: alto,
+        child: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+            leading: SizedBox(
+              height: ancho * 0.1,
+              width: alto * 0.1,
+              child: Image.network(recipes[index].image),
+            ),
+            title: Text(
+              " ${recipes[index].title}",
+              style: const TextStyle(color: Colors.green),
+            ),
+            onTap: () {
+              BlocProvider.of<RecipeCubit>(context)
+                  .getDetailRecipe(recipes[index].id);
+            },
+            trailing: const Icon(Icons.arrow_forward),
           ),
-          title: Text(
-            "${index + 1}. ${recipes[index].title}",
-            style: const TextStyle(color: Colors.green),
+          separatorBuilder: (context, index) => Divider(
+            color: Colors.green[900],
           ),
-          onTap: () {
-            BlocProvider.of<RecipeCubit>(context)
-                .getDetailRecipe(recipes[index].id);
-          },
+          itemCount: recipes.length,
         ),
-        separatorBuilder: (context, index) => Divider(
-          color: Colors.green[900],
-        ),
-        itemCount: recipes.length,
       ),
     );
   }
